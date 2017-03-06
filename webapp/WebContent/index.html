@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="lib/angular.min.js" ></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styleSheet.css">
+</head>
+
+<body  ng-app="main" ng-controller="mainCtrl">
+
+<!-- page1 include login and signup -->
+<div class="container" id="page1">
+    <h1> Project </h1>
+    <div class="col-sm-4"  ng-controller="loginCtrl">
+        <!-- signIn form -->
+        <form class="signIn">
+            <h2> login </h2>
+            <div class="form-group">
+                <label>username</label>
+                <input type="text" id="userLogin" class="form-control" name="username" ng-model="username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" ng-model="password">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="submit()">Submit</button>
+            <!-- retMsg label will display error/success message, after user click "submit" -->
+            <label id="retMsg"></label>
+        </form> 
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4" ng-controller="signUpCtrl" id="signUpController">
+        <!-- signUp form -->
+        <form class="signUp">
+            <h2> Sign Up </h2>
+            <div class="form-group has-feedback">
+                <label>username</label>
+                <input type="text" class="form-control" name="username" ng-model="username">
+                <!-- information icon, which open tooltip that display information about the field-->
+                <span class="glyphicon glyphicon-info-sign form-control-feedback"  aria-hidden="true"  data-toggle="tooltip" title="up to 10 characters. required" data-placement="top">
+                </span>
+            </div>
+            <div class="form-group has-feedback" >
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" ng-model="password" >
+                <!-- information icon, which open tooltip that display information about the field-->
+                <span   class="glyphicon glyphicon-info-sign form-control-feedback"  aria-hidden="true"  data-toggle="tooltip" title="up to 8 characters. required" data-placement="top">
+                </span>
+            </div>
+            <div class="form-group has-feedback">
+                <label>Nickname</label>
+                <input  type="text" class="form-control" name="nickname" ng-model="nickname">
+                <!-- information icon, which open tooltip that display information about the field-->
+                <span   class="glyphicon glyphicon-info-sign form-control-feedback"  aria-hidden="true"  data-toggle="tooltip" title="public name, up to 20 characters. required" data-placement="top">
+                </span>
+            </div>
+            <div class="form-group  has-feedback">
+                <label>Description</label>
+                <textarea type="text" class="form-control" name="description" ng-model="description">
+                </textarea>
+                <!-- information icon, which open tooltip that display information about the field-->
+                <span   class="glyphicon glyphicon-info-sign form-control-feedback"  aria-hidden="true"  data-toggle="tooltip" title="short description, up to 50 characters. optional" data-placement="top">
+                </span>
+            </div>
+            <div class="form-group has-feedback">
+                <label>Photo</label>
+                <input type="text" class="form-control" name="photo" ng-model="photo">
+                <!-- information icon, which open tooltip that display information about the field-->
+                <span   class="glyphicon glyphicon-info-sign form-control-feedback"  aria-hidden="true"  data-toggle="tooltip" title="link to photo. optional" data-placement="top">
+                </span>
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="submit()">Submit</button>
+            <!-- retMsg label will display error/success message, after user click "submit" -->
+            <label id="retMsg"></label>
+        </form> 
+    </div>
+</div>
+
+<!-- page2 include the main application - channels -->
+<div class="page2" ng-controller="Ctrl">
+
+    <!-- left sidebar for navigation between channels, create and search channels -->
+        <div  id="sidebar">
+            <!-- display profile, nickname and logout/homepage options -->
+            <div class="media" id="profile">
+                <div class="media-left">
+                    <img  class="media-object" src=""  width="50" height="50" alt="profile image" > 
+                </div>
+                <div  class="media-body">
+                    <h4 class="media-heading"> 
+                        <span id="nickname" class="author"></span>
+                    </h4>
+                    <span class="glyphicon glyphicon-off" aria-hidden="true" ng-click=logOut()></span>
+                    <span class="glyphicon glyphicon-home" aria-hidden="true" ng-click="moveToChannel('')"></span>                   
+                </div> 
+            </div>
+        <!-- creat channel option. when clicked open a modal -->
+        <a href="#" data-toggle="modal" data-target="#createChannel"> <span class="glyphicon glyphicon-plus" aria-hidden="true">
+        </span> Create Channel </a>
+        <!-- Modal fro creating new channel -->
+        <div class="modal fade" id="createChannel" tabindex="-1" role="dialog" aria-labelledby="createChannelModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!-- close button -->
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+                        &times; </span></button>
+                        <h4 class="modal-title" id="createChannelModal">Create Channel</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- create channel form, include name and description input -->
+                        <form>
+                            <div class="form-group">
+                                <label>Channel name</label>
+                                <input type="text" class="form-control" ng-model="channelname">
+                            </div>
+                            <label>Description</label>
+                            <textarea id="description" class="form-control" ng-model=" description">
+                            </textarea>
+                            <label id="leftChar"></label>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- display message after user submitted form -->
+                        <label id="msgDisplay" > {{ msgDisplay }}</label>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" ng-click="createNewChannel()">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search channel option, open modal when clicked -->
+        <a href="#" data-toggle="modal" data-target="#searchChannel"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search Channel </a>
+        <!-- Modal for search Channel -->
+        <div class="modal fade" id="searchChannel" tabindex="-1" role="dialog" aria-labelledby="searchChannelModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+                        &times; </span></button>
+                        <h4 class="modal-title" id="searchChannelModal">Search Channel</h4>
+                    </div>
+                    <div class="modal-body">
+                        <nav class="navbar">
+                            <!-- display two options for search -->
+                            <ul class="nav nav-pills nav-justified">
+                                <li role="presentation" class="active" id="byName"><a href="#">By channel name</a></li>
+                                <li role="presentation" id="byParticipate"><a href="#">By channel participates</a></li>
+                            </ul>
+                        </nav>
+                        <div class="input-group">
+                            <!-- search input -->
+                            <input type="text" class="form-control" placeholder="Search for..." ng-model="query">
+                            <span class="input-group-btn">
+                                <!-- add search icon to the input field -->
+                                <button class="btn btn-default" type="button" ng-click="search()" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </span>
+                        </div>
+                        <div class="media-list">
+                            <!-- we get queryResult from the server and disply it -->
+                            <div class="media" ng-repeat="x in queryResult">
+                                <div  class="media-body">
+                                    <h4 class="media-heading">
+                                        {{ x.channelName }}  <span> ({{ x.participantNumber }})</span>
+                                        <!-- icon that when clicked the user subscribe to the channel -->
+                                        <span ng-click="subscribe(x.channelName)" class="glyphicon glyphicon-plus" aria-hidden="true"></span>  
+                                    </h4>
+                                    <!-- display description only if there is -->
+                                    <div ng-show="x.description!='undefined'"> {{ x.description }} </div>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                     <label id="msgDisplay" > {{ msgDisplay }}</label>
+                        <!-- close button -->
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- display public channels -->
+        <ul class="publicChannels list-group" >        
+            <li class="list-group-item-heading" >Public Channels  </span> </li>
+            <!-- iteration over all the publicDiscussion. when user click on channel we move to the channel
+                 with moveToChannel function -->
+            <li  ng-click="moveToChannel(x.channel)" class="channels list-group-item" ng-repeat="x in publicDiscussion">
+                <a  href="#">{{ x.channel }} 
+                    <!-- disply icon if there are mentions -->
+                    <span id="notificationIcon" ng-show="x.notification!=0" class="glyphicon glyphicon-exclamation-sign" 
+                    aria-hidden="true"></span> 
+                    <!-- we display bages only when there are unread message with ng-show condition -->
+                    <span class="badge" ng-show="x.unseenMsgNumber!=0" > {{x.unseenMsgNumber}}</span>    
+                </a>
+            </li>  
+       </ul>
+       <!-- display private channels -->
+       <ul class="privateChannels list-group" >
+            <li class="list-group-item-heading" >Private Channels  </span> </li>
+            <!-- iteration over all the privateDiscussion. when user click on channel we move to the channel
+                 with moveToChannel function -->
+            <li  ng-click="moveToChannel(x.channel)" class="channels list-group-item" ng-repeat="x in privateDiscussion">
+                <a  href="#">{{ x.displayedName }} 
+                    <!-- disply icon if there are mentions -->
+                    <span id="notificationIcon" ng-show="x.notification!=0" class="glyphicon glyphicon-exclamation-sign" 
+                    aria-hidden="true"></span> 
+                    <!-- we display bages only when there are unread message with ng-show condition -->
+                    <span class="badge" ng-show="x.unseenMsgNumber!=0" > {{x.unseenMsgNumber}}</span>
+                </a>
+            </li>  
+       </ul>
+    </div>
+    <!-- header part of the chat, includes and unsubscribe option chat name -->
+    <nav class="navbar navbar-default navbar-static-top" id="topNav">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <!-- here will be the header, using jquery -->
+                <li id="channelNameHeader">
+                    <a></a>
+                </li>  
+                <li>
+                    <!--unsubscribe icon -->
+                    <span id="unsubscribe" ng-click="unsubscribe()" class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- chat include the messages, the textarea for sending message, and channel name and discription in navBar -->
+    <div id="chat">
+        <div class="media-list" >
+            <!-- chanelMessage is object that contains all the main messages, and gets update in real time.
+                 we iteration on the messages and display it.
+                 on finish render- function that will be called when all the messages will be displayed,
+                 and change the position of the scrollbar if needed.
+            -->
+            <div class="media" ng-repeat="x in channelMessage"  id="{{ x.id }}"  on-finish-render="ngRepeatFinished" >
+                <div class="media-left">
+                    <a href="#">
+                        <!-- user profile img -->
+                        <img  class="media-object" ng-src=" {{ x.picture }}"  width="50" height="50" alt="profile image">
+                    </a>     
+                    <!-- if main massege has replys -->
+                    <a ng-if="x.replays[0]">
+                        <!-- we display arrow that when clicked will hide/show comments -->   
+                        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"  ng-click=commentsHideAll(x.id)>
+                        </span>
+
+                    </a>   
+                </div>
+                <div  class="media-body">
+                    <h4 class="media-heading">
+                        <!-- we display author of the message. when clicked we open private chat -->
+                        <a class="author" ng-click="createPrivateChat(x.fromUser)"> {{ x.fromUser }} </a> 
+                        <!-- display time -->
+                        <span class="time"> {{ x.time }} </span> 
+                        <!-- display icon that when clicked allow to write comments (modal open) -->
+                        <a href="#" ng-click="openReplyModal(x)">
+                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                        </a>
+                    </h4>
+                    <!-- content of the main message -->
+                    <div> {{x.text }}</div>
+                    <div id="replyMsgList" class="media-list">
+                        <!-- x.replys is object that contain all the main message replys.
+                             we iterate on the replys and disply it.
+                             the code is very similar to the main message media.
+                        -->
+                        <div class="media" ng-repeat="replay in x.replays" id="{{ replay.id }}">
+                            <div class="media-left">
+                                <a href="#">
+                                    <!-- profile img -->
+                                    <img class="media-object" ng-src=" {{  replay.picture }}"  width="50" height="50" alt="profile img">
+                                </a>
+                                <!-- we check if the reply has replys -->
+                                <a ng-if="x.replays[$index].id==x.replays[$index + 1].replyTo" ng-repeat-end>
+                                    <!-- display arrow that allow to hide/show replys -->
+                                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"  
+                                    ng-click= commentsHide(x.id,x.replays[$index].id)></span>
+                                </a> 
+                            </div>
+                            <div  class="media-body">
+                               <h4 class="media-heading">
+                                     <!-- display author of the message. when clicked we open private chat -->
+                                    <a class="author" ng-click="createPrivateChat(replay.fromUser)"> {{ replay.fromUser }}</a> 
+                                    <span class="time" > {{ replay.time }} </span>
+                                    <!-- display icon that when clicked allow to write comments (modal open) -->
+                                    <a href="#" ng-click="openReplyModal(replay)"> 
+                                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                                    </a>
+                                </h4>
+                                <!-- display reply content -->
+                                <div> {{replay.text }} </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div> 
+                <!-- this function will be called after every iteration, and will change scrollbar potision -->
+                <canva ng-init="changeScrollbarPosition()"/> 
+            </div>
+        </div>
+        <!-- where the user write message to channel. The message sent by clicking 'enter' -->
+        <div id="writeMessage">
+            <form>
+                <textarea id="message" class="form-control" onkeyup="textAreaAdjust(this)" placeholder="Message"></textarea>
+            </form>
+        </div>
+    </div>
+
+    <!-- modal for writing replys -->
+    <div class="modal fade" id="replay" tabindex="-1" role="dialog" aria-labelledby="replayModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"> &times; </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- textarea for writing comment -->
+                    <textarea id="replayContent" class="form-control" placeholder="Message"></textarea>
+                    <label id="leftChar"></label>
+                </div>
+                <div class="modal-footer">     
+                    <label id="msgDisplay"> {{ msgDisplay }}</label>   
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" ng-click="replay()">replay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/index.js"></script>
+<script src="js/page1.js"></script>
+<script src="js/page2.js"></script>
+<script src="js/websocket.js"></script>
+
+</body>
+</html>
+

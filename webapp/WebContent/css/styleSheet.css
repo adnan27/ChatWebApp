@@ -1,0 +1,190 @@
+  #retMsg{
+    padding-left:10px;
+  }
+  .modal .modal-body {
+      max-height: 420px;
+      overflow-y: auto;
+  }
+  .form-control-feedback {
+      pointer-events: initial;
+  }
+  .tooltip-inner {
+   min-width: 150px;
+  }
+  #page1, .page2{
+      display: none;
+  }
+  html, body, .page2{
+      height:100%;
+      font-size: 1em; 
+      overflow-x:hidden;
+      color:black;
+  }
+  a:link ,a:hover,a:active,a:visited{
+    text-decoration: none; 
+    outline:0;
+    border:none;
+    color:inherit; 
+  }
+  body{
+      overflow:hidden;
+      background-color:rgb(222, 234, 249);
+      font-family: Verdana;
+  }
+  #chat {
+    word-wrap:break-word;
+    word-break: break-all;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:10px;
+    position: absolute;
+    top: 60px;
+    left: 220px;
+    bottom: 90px;
+    right: 0;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    background-color:white;
+  }
+  #sidebar{
+    position: absolute;
+    top:0;
+    width:220px;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    background-color: rgb(52,83,124);
+    text-indent: 1em;
+    padding: 0;
+    padding-right: 20px;
+    color:rgba(211,221,234,0.7); 
+    word-wrap: break-word;
+  }
+  .badge{
+    text-indent: 0;
+    background-color: rgb(107,152,214);
+    border: 2px solid rgb(52,83,124);
+  }
+  #notificationIcon{
+    color:white;
+  }
+  .head{
+    font-weight: bold;
+  }
+  .head:hover{
+    background-color: rgba(25,46,74,0.3);
+  }
+  .list-group-item-heading{
+    font-weight: bold;
+    margin: 0;
+  }
+  .list-group-item{
+    padding-top:1px;
+    padding-bottom:2px;
+    background-color: rgb(52,83,124);
+    border:none;
+    border-radius: 5px;
+    color:rgba(211,221,234,0.7); 
+  }
+  .list-group-item:hover{
+    background-color: rgba(25,46,74,0.3);
+  }
+  #topNav {
+    height: 60px;
+    margin-left: 220px;
+    background-color:white;
+  }
+  #bottomNav{
+    position:fixed;
+    width:100%;
+    bottom:0;
+    padding:0;
+    margin:0;
+    border: 1px lightgrey solid;
+  }
+  #writeMessage{
+    margin:0;
+    padding:0;
+    bottom:0;
+    position:fixed;
+    min-height:90px;
+    background-color:white;
+    left:220px;
+    right:0px; 
+  }
+  #message{
+    position:absolute;
+    height:45px;
+    left:5%;
+    bottom:22.5px;
+    width:90%;
+    font-size:1em;
+    border:1.5px solid rgb(107,152,214); 
+    border-radius:4px;
+    min-height: 45px;
+    overflow: hidden;
+  }
+
+  .active {
+    color: white;
+    font-weight:bold;
+    background-color: rgb(107,152,214) !important;
+  }
+  #searchChannel .media-heading{
+    font-weight: bold;
+  }
+  #replayContent{
+   height:70px;
+   overflow: hidden;
+  }
+  #channelNameHeader{
+    font-size:1.7em;
+  }
+  .publicChannels{
+  margin-top:20px;
+  }
+  #createChannel, #searchChannel{
+    color:black;
+    text-indent: 0;
+  }
+  #msgDisplay{
+    font-weight:normal;
+    float:left;
+  }
+  .time{
+    font-size:0.7em;
+  }
+  .author{
+    font-size:1.3em;
+  }
+  #chat .author, #chat span{
+      color:black;
+  }
+  #replyMsgList{
+    padding-top:10px;
+  }
+  #profile{
+    text-indent: 0;
+    padding:20px;
+    padding-right:0;
+  }
+  #unsubscribe{
+    display:none;
+    top:20px;
+  }
+  .media-body{
+    margin:0;padding:0;
+  }
+  #description{
+    height:100px;
+    overflow:hidden;
+  }
+  #leftChar{
+    font-weight:normal;float:left;padding-top:5px;
+  }
+  #searchChannel .media-list{
+    padding-top:10px
+  }
+  .glyphicon, #chat .author{
+    cursor:pointer;
+  }
